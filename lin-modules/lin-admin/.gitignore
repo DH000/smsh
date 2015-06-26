@@ -1,0 +1,12 @@
+/target/
+/.settings/
+.project
+.classpath
+/.git/
+.project
+.a
+.dall
+/classes/
+.exe
+.bat
+.DS_Store
