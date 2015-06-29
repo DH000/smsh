@@ -4,11 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- * dao支持
  * 
- * @author xuelin
- *
- * 广州房友圈网络技术有限公司
+* @ClassName: HibernateDaoSupport 
+* @Description: DAO支持
+* @author xuelin 
+* @date Jun 29, 2015 2:45:10 PM 
+*
  */
 public class HibernateDaoSupport {
 	private SessionFactory sessionFactory;

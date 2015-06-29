@@ -2,6 +2,16 @@ package com.lin.dao;
 
 import java.io.Serializable;
 
+/**
+ * 
+* @ClassName: IBaseDao 
+* @Description: 通用DAO接口
+* @author xuelin 
+* @date Jun 29, 2015 2:47:18 PM 
+* 
+* @param <T>
+* @param <PK>
+ */
 public interface IBaseDao<T, PK extends Serializable> {
 	/**
 	 * 通过id获取记录

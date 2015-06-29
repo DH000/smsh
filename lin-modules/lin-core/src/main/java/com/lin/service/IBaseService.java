@@ -3,11 +3,15 @@ package com.lin.service;
 import java.io.Serializable;
 
 /**
- * 通用service
  * 
- * @author xuelin
- *
- * 广州房友圈网络技术有限公司
+ * 
+* @ClassName: IBaseService 
+* @Description: 通用service接口
+* @author xuelin 
+* @date Jun 29, 2015 2:50:30 PM 
+* 
+* @param <T>
+* @param <PK>
  */
 public interface IBaseService<T, PK extends Serializable> {
 

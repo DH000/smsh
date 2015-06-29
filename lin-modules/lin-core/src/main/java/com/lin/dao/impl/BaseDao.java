@@ -9,11 +9,14 @@ import com.lin.dao.HibernateDaoSupport;
 import com.lin.dao.IBaseDao;
 
 /**
- * 通用dao
  * 
- * @author xuelin
- *
- * 广州房友圈网络技术有限公司
+* @ClassName: BaseDao 
+* @Description: 通用DAO
+* @author xuelin 
+* @date Jun 29, 2015 2:47:56 PM 
+* 
+* @param <T>
+* @param <PK>
  */
 public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport implements IBaseDao<T, PK> {
 	/**

@@ -6,6 +6,17 @@ import com.lin.dao.IBaseDao;
 import com.lin.service.IBaseService;
 import com.lin.utils.GenericsUtils;
 
+/**
+ * 
+ * 
+* @ClassName: BaseService 
+* @Description: 通用service
+* @author xuelin 
+* @date Jun 29, 2015 2:51:00 PM 
+* 
+* @param <T>
+* @param <PK>
+ */
 public class BaseService<T, PK extends Serializable> implements IBaseService<T, PK> {
 	protected Class<T> entityClass;
 	private IBaseDao<T, PK> baseDao;
