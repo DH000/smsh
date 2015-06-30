@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import com.lin.dao.IBaseDao;
 import com.lin.service.IBaseService;
-import com.lin.utils.GenericsUtils;
+import com.lin.utils.Reflections;
 
 /**
  * 
@@ -29,10 +29,9 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public Class<T> getEntityClass(){
 		if(null == entityClass){
-			entityClass = GenericsUtils.getSuperClassGenricType(getClass());
+			entityClass = Reflections.getClassGenricType(getClass());
 		}
 		
 		return entityClass;

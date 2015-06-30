@@ -23,6 +23,12 @@ public class TesterServiceTest {
 	}
 	
 	@Test
+	public void loadTest(){
+		Tester er = testerService.load(1);
+		System.out.println(JSONObject.toJSONString(er));
+	}
+	
+	@Test
 	public void saveTest(){
 		Tester er = new Tester();
 		er.setName("xxx1");

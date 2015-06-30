@@ -26,25 +26,29 @@ public class HibernateDaoSupport {
 		return this.sessionFactory.getCurrentSession();
 	}
 	
-	public StringBuilder getHqlSelect(final Class<?> entityClass){
-		if(null == entityClass){
-			throw new IllegalArgumentException("实体类不能为null");
-		}
-		
+	/**
+	 * 返回select hql语句
+	 * @param entityClass
+	 * @return
+	 */
+	public static StringBuilder getSelectHql(final Class<?> entityClass){
 		StringBuilder hqlBuf = new StringBuilder("select ");
-		hqlBuf.append(" mod from ").append(entityClass.getSimpleName()).append(" as mod ");
+		hqlBuf.append(" mod from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
 		
 		return hqlBuf;
 	}
 	
-	public StringBuilder getHqlSelect(final Class<?> entityClass, String[] properties){
-		if(null == entityClass){
-			throw new IllegalArgumentException("实体类不能为null");
-		}
-		
+	/**
+	 * 返回指定属性select hql语句
+	 * 
+	 * @param entityClass
+	 * @param properties
+	 * @return
+	 */
+	public static StringBuilder getSelectHql(final Class<?> entityClass, String[] properties){
 		int len = properties.length;
 		if(null == properties || 0 == len){
-			return getHqlSelect(entityClass);
+			return getSelectHql(entityClass);
 		}
 		
 		StringBuilder hqlBuf = new StringBuilder("select");
@@ -53,8 +57,19 @@ public class HibernateDaoSupport {
 		}
 		
 		hqlBuf.deleteCharAt(hqlBuf.length() - 1);
-		hqlBuf.append(" from ").append(entityClass.getSimpleName()).append(" as mod ");
+		hqlBuf.append(" from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
 		
 		return hqlBuf;
+	}
+	
+	/**
+	 * 返回count hql语句
+	 * 
+	 * @param entityClass
+	 * @return
+	 */
+	public static StringBuilder getCountHql(final Class<?> entityClass){
+		StringBuilder hqlBuf = new StringBuilder();
+		return hqlBuf.append("select count(1) from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
 	}
 }

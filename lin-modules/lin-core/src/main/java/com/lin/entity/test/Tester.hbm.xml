@@ -3,7 +3,7 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-	<class name="com.lin.entity.test.Tester" table="t_test">
+	<class name="com.lin.entity.test.Tester" table="t_test" lazy="false">
 		<id name="id">
 			<generator class="native" />
 		</id>
