@@ -3,7 +3,4 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="baseService" class="com.lin.service.impl.BaseService" autowire="byName" />
-	<bean id="testerService" class="com.lin.service.impl.test.TesterService" autowire="byName" />
-
 </beans>

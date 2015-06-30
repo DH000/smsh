@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import com.lin.dao.HibernateDaoSupport;
 import com.lin.dao.IBaseDao;
@@ -18,6 +19,7 @@ import com.lin.dao.IBaseDao;
 * @param <T>
 * @param <PK>
  */
+@Repository("baseDao")
 public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport implements IBaseDao<T, PK> {
 	/**
 	 * 通过id获取记录
@@ -28,7 +30,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public T find(final Class<T> entityClass, PK id) {
-		String hql = getHqlSelect(entityClass).append("where id =:id").toString();
+		String hql = "select module from Tester as module where module.id = :id";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("id", id);
 		List<T> list = query.list();

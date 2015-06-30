@@ -10,8 +10,7 @@
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<!-- springmvc 除action之外 -->
-	<context:annotation-config />
+	<context:component-scan base-package="com.lin" />
 
 	<!-- 属性文件读入 -->
 	<bean id="propertyConfigurer"

@@ -2,6 +2,8 @@ package com.lin.service.impl;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
+
 import com.lin.dao.IBaseDao;
 import com.lin.service.IBaseService;
 import com.lin.utils.GenericsUtils;
@@ -19,11 +21,8 @@ import com.lin.utils.GenericsUtils;
  */
 public class BaseService<T, PK extends Serializable> implements IBaseService<T, PK> {
 	protected Class<T> entityClass;
+	@Resource
 	private IBaseDao<T, PK> baseDao;
-	
-	public void setBaseDao(IBaseDao<T, PK> baseDao) {
-		this.baseDao = baseDao;
-	}
 	
 	/**
 	 * 实体类类型

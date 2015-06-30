@@ -1,5 +1,7 @@
 package com.lin.dao;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -12,16 +14,14 @@ import org.hibernate.SessionFactory;
 *
  */
 public class HibernateDaoSupport {
+	@Resource
 	private SessionFactory sessionFactory;
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-	
+	/**
+	 * 获取当前session
+	 * 
+	 * @return
+	 */
 	public Session getSession(){
 		return this.sessionFactory.getCurrentSession();
 	}
@@ -31,8 +31,29 @@ public class HibernateDaoSupport {
 			throw new IllegalArgumentException("实体类不能为null");
 		}
 		
-		StringBuilder hqlBuf = new StringBuilder("select new ");
-		hqlBuf.append(entityClass.getName()).append(" form ").append(entityClass.getName()).append(" ");
+		StringBuilder hqlBuf = new StringBuilder("select ");
+		hqlBuf.append(" mod from ").append(entityClass.getSimpleName()).append(" as mod ");
+		
+		return hqlBuf;
+	}
+	
+	public StringBuilder getHqlSelect(final Class<?> entityClass, String[] properties){
+		if(null == entityClass){
+			throw new IllegalArgumentException("实体类不能为null");
+		}
+		
+		int len = properties.length;
+		if(null == properties || 0 == len){
+			return getHqlSelect(entityClass);
+		}
+		
+		StringBuilder hqlBuf = new StringBuilder("select");
+		for(int i=0; i<len; i++){
+			hqlBuf.append(" mod.").append(properties[i]).append(",");
+		}
+		
+		hqlBuf.deleteCharAt(hqlBuf.length() - 1);
+		hqlBuf.append(" from ").append(entityClass.getSimpleName()).append(" as mod ");
 		
 		return hqlBuf;
 	}

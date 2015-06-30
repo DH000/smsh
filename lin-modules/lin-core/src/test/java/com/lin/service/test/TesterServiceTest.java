@@ -21,4 +21,12 @@ public class TesterServiceTest {
 		Tester er = testerService.find(1);
 		System.out.println(JSONObject.toJSONString(er));
 	}
+	
+	@Test
+	public void saveTest(){
+		Tester er = new Tester();
+		er.setName("xxx1");
+		er.setVersion(2);
+		testerService.save(er);
+	}
 }
