@@ -65,7 +65,7 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @param values
 	 * @return
 	 */
-	public List<T> findByPropertes(final Class<T> entityClass, String[] propertyNames, Object[] values);
+	public List<T> findByProperties(final Class<T> entityClass, String[] propertyNames, Object[] values);
 	
 	/**
 	 * 通过属性名分页查询
@@ -89,7 +89,7 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @param length
 	 * @return
 	 */
-	public List<T> findByPropertesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, int offset, int length);
+	public List<T> findByPropertiesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, int offset, int length);
 	
 	/**
 	 * 统计记录总数

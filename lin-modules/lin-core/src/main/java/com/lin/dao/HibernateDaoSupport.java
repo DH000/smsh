@@ -70,6 +70,6 @@ public class HibernateDaoSupport {
 	 */
 	public static StringBuilder getCountHql(final Class<?> entityClass){
 		StringBuilder hqlBuf = new StringBuilder();
-		return hqlBuf.append("select count(1) from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
+		return hqlBuf.append("select count(*) from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
 	}
 }

@@ -65,7 +65,7 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @param values
 	 * @return
 	 */
-	public List<T> findByPropertes(String[] propertyNames, Object[] values);
+	public List<T> findByProperties(String[] propertyNames, Object[] values);
 	
 	/**
 	 * 通过属性名分页查询
@@ -89,7 +89,7 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @param length
 	 * @return
 	 */
-	public List<T> findByPropertesForPage(String[] propertyNames, Object[] values, int offset, int length);
+	public List<T> findByPropertiesForPage(String[] propertyNames, Object[] values, int offset, int length);
 	
 	/**
 	 * 统计记录总数

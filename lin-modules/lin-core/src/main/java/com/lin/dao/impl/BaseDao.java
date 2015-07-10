@@ -111,7 +111,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findByPropertes(final Class<T> entityClass, String[] propertyNames, Object[] values) {
+	public List<T> findByProperties(final Class<T> entityClass, String[] propertyNames, Object[] values) {
 		if (null == propertyNames || 0 == propertyNames.length) {
 			throw new IllegalArgumentException("属性名不能为空");
 		}
@@ -168,7 +168,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<T> findByPropertesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, int offset, int length){
+	public List<T> findByPropertiesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, int offset, int length){
 		if (null == propertyNames || 0 == propertyNames.length) {
 			throw new IllegalArgumentException("属性名不能为空");
 		}

@@ -120,8 +120,8 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public List<T> findByPropertes(String[] propertyNames, Object[] values){
-		return baseDao.findByPropertes(getEntityClass(), propertyNames, values);
+	public List<T> findByProperties(String[] propertyNames, Object[] values){
+		return baseDao.findByProperties(getEntityClass(), propertyNames, values);
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public List<T> findByPropertesForPage(String[] propertyNames, Object[] values, int offset, int length){
-		return baseDao.findByPropertesForPage(getEntityClass(), propertyNames, values, offset, length);
+	public List<T> findByPropertiesForPage(String[] propertyNames, Object[] values, int offset, int length){
+		return baseDao.findByPropertiesForPage(getEntityClass(), propertyNames, values, offset, length);
 	}
 
 	/**

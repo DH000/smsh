@@ -51,4 +51,39 @@ public class BaseServiceTest {
 		Tester er = baseService.find(1);
 		System.out.println(JSONObject.toJSONString(er));
 	}
+	
+	@Test
+	public void findByPropertyTest(){
+		System.out.println(JSONObject.toJSONString(baseService.findByProperty("name", "xxx1")));
+	}
+	
+	@Test
+	public void findByPropertiesTest(){
+		System.out.println(JSONObject.toJSONString(baseService.findByProperties(new String[]{"id", "name"}, new Object[]{2, "xxx1"})));
+	}
+	
+	@Test
+	public void findByPropertyForPageTest(){
+		System.out.println(JSONObject.toJSONString(baseService.findByPropertyForPage("version", 1, 10, 10)));
+	}
+	
+	@Test
+	public void findByPropertiesForPageTest(){
+		System.out.println(JSONObject.toJSONString(baseService.findByPropertiesForPage(new String[]{"name", "id"}, new Object[]{"xxx1", 2}, 0, 10)));
+	}
+	
+	@Test
+	public void countTest(){
+		System.out.println(baseService.count());
+	}
+	
+	@Test
+	public void countByPropertyTest(){
+		System.out.println(baseService.countByProperty("name", "xxx1"));
+	}
+	
+	@Test
+	public void countByPropertiesTest(){
+		System.out.println(baseService.countByProperties(new String[]{"name", "version"}, new Object[]{"xxx1", 2}));
+	}
 }
