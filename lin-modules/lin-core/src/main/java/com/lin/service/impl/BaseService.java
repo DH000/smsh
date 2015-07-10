@@ -101,7 +101,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 通过属性名查询
 	 * 
-	 * @param entityClass
 	 * @param propertyName
 	 * @param value
 	 * @return
@@ -114,7 +113,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 通过多个属性名查询
 	 * 
-	 * @param entityClass
 	 * @param propertyNames
 	 * @param values
 	 * @return
@@ -127,7 +125,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 通过属性名分页查询
 	 * 
-	 * @param entityClass
 	 * @param propertyName
 	 * @param value
 	 * @param offset
@@ -142,7 +139,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 通过多个属性名分页查询
 	 * 
-	 * @param entityClass
 	 * @param propertyNames
 	 * @param values
 	 * @param offset
@@ -157,7 +153,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 统计记录总数
 	 * 
-	 * @param entityClass
 	 * @return
 	 */
 	@Override
@@ -168,7 +163,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 通过某个属性统计记录总数
 	 * 
-	 * @param entityClass
 	 * @param propertyName
 	 * @param value
 	 * @return
@@ -181,7 +175,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	/**
 	 * 通过某个多个属性统计记录总数
 	 * 
-	 * @param entityClass
 	 * @param propertyNames
 	 * @param values
 	 * @return

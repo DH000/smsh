@@ -50,7 +50,6 @@ public interface IBaseService<T, PK extends Serializable> {
 	/**
 	 * 通过属性名查询
 	 * 
-	 * @param entityClass
 	 * @param propertyName
 	 * @param value
 	 * @return
@@ -60,7 +59,6 @@ public interface IBaseService<T, PK extends Serializable> {
 	/**
 	 * 通过多个属性名查询
 	 * 
-	 * @param entityClass
 	 * @param propertyNames
 	 * @param values
 	 * @return
@@ -70,7 +68,6 @@ public interface IBaseService<T, PK extends Serializable> {
 	/**
 	 * 通过属性名分页查询
 	 * 
-	 * @param entityClass
 	 * @param propertyName
 	 * @param value
 	 * @param offset
@@ -82,7 +79,6 @@ public interface IBaseService<T, PK extends Serializable> {
 	/**
 	 * 通过多个属性名分页查询
 	 * 
-	 * @param entityClass
 	 * @param propertyNames
 	 * @param values
 	 * @param offset
@@ -102,7 +98,6 @@ public interface IBaseService<T, PK extends Serializable> {
 	/**
 	 * 通过某个属性统计记录总数
 	 * 
-	 * @param entityClass
 	 * @param propertyName
 	 * @param value
 	 * @return
@@ -112,7 +107,6 @@ public interface IBaseService<T, PK extends Serializable> {
 	/**
 	 * 通过某个多个属性统计记录总数
 	 * 
-	 * @param entityClass
 	 * @param propertyNames
 	 * @param values
 	 * @return
