@@ -1,6 +1,7 @@
 package com.lin.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -45,4 +46,76 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @param entity
 	 */
 	public void saveOrUpdate(T entity);
+	
+	/**
+	 * 通过属性名查询
+	 * 
+	 * @param entityClass
+	 * @param propertyName
+	 * @param value
+	 * @return
+	 */
+	public List<T> findByProperty(String propertyName, Object value);
+	
+	/**
+	 * 通过多个属性名查询
+	 * 
+	 * @param entityClass
+	 * @param propertyNames
+	 * @param values
+	 * @return
+	 */
+	public List<T> findByPropertes(String[] propertyNames, Object[] values);
+	
+	/**
+	 * 通过属性名分页查询
+	 * 
+	 * @param entityClass
+	 * @param propertyName
+	 * @param value
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
+	public List<T> findByPropertyForPage(String propertyName, Object value, int offset, int length);
+	
+	/**
+	 * 通过多个属性名分页查询
+	 * 
+	 * @param entityClass
+	 * @param propertyNames
+	 * @param values
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
+	public List<T> findByPropertesForPage(String[] propertyNames, Object[] values, int offset, int length);
+	
+	/**
+	 * 统计记录总数
+	 * 
+	 * @param entityClass
+	 * @return
+	 */
+	public long count();
+	
+	/**
+	 * 通过某个属性统计记录总数
+	 * 
+	 * @param entityClass
+	 * @param propertyName
+	 * @param value
+	 * @return
+	 */
+	public long countByProperty(String propertyName, Object value);
+	
+	/**
+	 * 通过某个多个属性统计记录总数
+	 * 
+	 * @param entityClass
+	 * @param propertyNames
+	 * @param values
+	 * @return
+	 */
+	public long countByProperties(String[] propertyNames, Object[] values);
 }

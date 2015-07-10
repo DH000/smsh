@@ -29,9 +29,26 @@ public class BaseServiceTest {
 	}
 	
 	@Test
+	public void saveOrUpdateTest(){
+		Tester er = new Tester();
+		er.setVersion(1);
+		er.setId(1);
+		
+		for(int i=0; i<100; i++){
+			er.setName("helloxx-" + i);
+			baseService.saveOrUpdate(er);
+		}
+	}
+	
+	@Test
 	public void findTest(){
 		Tester er = baseService.find(1);
 		System.out.println(JSONObject.toJSONString(er));
 	}
 	
+	@Test
+	public void loadTest(){
+		Tester er = baseService.find(1);
+		System.out.println(JSONObject.toJSONString(er));
+	}
 }
