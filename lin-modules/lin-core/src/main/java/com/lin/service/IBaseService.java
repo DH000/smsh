@@ -1,7 +1,10 @@
 package com.lin.service;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+
+import org.hibernate.LockMode;
 
 /**
  * 
@@ -23,6 +26,25 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @return
 	 */
 	public T find(PK id);
+	
+	/**
+	 * 给行数据上锁
+	 * 在一个事务内有效
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public T findForUpdate(PK id);
+	
+	/**
+	 * 给数据上锁
+	 * 在一个事务内有效
+	 * 
+	 * @param id
+	 * @param lockMode
+	 * @return
+	 */
+	public T findForUpdate(PK id, LockMode lockMode);
 	
 	/**
 	 * 通过id获取记录
@@ -112,4 +134,18 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @return
 	 */
 	public long countByProperties(String[] propertyNames, Object[] values);
+	
+	/**
+	 * 更新实体
+	 * 
+	 * @param entity
+	 */
+	public void update(T entity);
+	
+	/**
+	 * 批量更新
+	 * 
+	 * @param entities
+	 */
+	public void update(Collection<T> entities);
 }

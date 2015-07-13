@@ -1,7 +1,10 @@
 package com.lin.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+
+import org.hibernate.LockMode;
 
 /**
  * 
@@ -22,6 +25,17 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @return
 	 */
 	public T find(final Class<T> entityClass, PK id);
+	
+	/**
+	 * 给数据上锁
+	 * 在一个事务内有效
+	 * 
+	 * @param entityClass
+	 * @param id
+	 * @param lockMode
+	 * @return
+	 */
+	public T findForUpdate(final Class<T> entityClass, PK id, LockMode lockMode);
 	
 	/**
 	 * 通过id获取记录
@@ -118,4 +132,20 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @return
 	 */
 	public long countByProperties(final Class<T> entityClass, String[] propertyNames, Object[] values);
+	
+	/**
+	 * 更新实体
+	 * 
+	 * @param entityClass
+	 * @param entity
+	 */
+	public void update(final Class<T> entityClass, T entity);
+	
+	/**
+	 * 批量更新
+	 * 
+	 * @param entityClass
+	 * @param entities
+	 */
+	public void update(final Class<T> entityClass, Collection<T> entities);
 }

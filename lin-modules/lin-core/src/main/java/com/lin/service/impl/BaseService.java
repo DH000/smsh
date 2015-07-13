@@ -1,9 +1,12 @@
 package com.lin.service.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.hibernate.LockMode;
 
 import com.lin.dao.IBaseDao;
 import com.lin.service.IBaseService;
@@ -52,6 +55,39 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 		}
 
 		return baseDao.find(getEntityClass(), id);
+	}
+	
+	/**
+	 * 给行数据上锁
+	 * 在一个事务内有效
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public T findForUpdate(PK id){
+		if (null == id) {
+			throw new IllegalArgumentException("id不能为null");
+		}
+		
+		return findForUpdate(id, LockMode.UPGRADE_NOWAIT);
+	}
+	
+	/**
+	 * 给数据上锁
+	 * 在一个事务内有效
+	 * 
+	 * @param id
+	 * @param lockMode
+	 * @return
+	 */
+	@Override
+	public T findForUpdate(PK id, LockMode lockMode){
+		if (null == id) {
+			throw new IllegalArgumentException("id不能为null");
+		}
+		
+		return baseDao.findForUpdate(getEntityClass(), id, lockMode);
 	}
 
 	/**
@@ -182,5 +218,25 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	@Override
 	public long countByProperties(String[] propertyNames, Object[] values){
 		return baseDao.countByProperties(getEntityClass(), propertyNames, values);
+	}
+	
+	/**
+	 * 更新实体
+	 * 
+	 * @param entity
+	 */
+	@Override
+	public void update(T entity){
+		baseDao.update(getEntityClass(), entity);
+	}
+	
+	/**
+	 * 批量更新
+	 * 
+	 * @param entities
+	 */
+	@Override
+	public void update(Collection<T> entities){
+		baseDao.update(getEntityClass(), entities);
 	}
 }

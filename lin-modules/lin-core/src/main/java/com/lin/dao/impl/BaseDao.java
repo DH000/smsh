@@ -1,14 +1,17 @@
 package com.lin.dao.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.lin.dao.HibernateDaoSupport;
 import com.lin.dao.IBaseDao;
+import com.lin.utils.Collections3;
 
 /**
  * 
@@ -32,16 +35,33 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public T find(final Class<T> entityClass, PK id) {
-		String hql = getSelectHql(entityClass).append(" and mod.id = :id").toString();
+		String hql = getSelectHql(entityClass).append(" and model.id = :id").toString();
 		Query query = getSession().createQuery(hql);
 		query.setParameter("id", id);
 		List<T> list = query.list();
 
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
+		return list.get(0);
+	}
+	
+	/**
+	 * 给数据上锁
+	 * 在一个事务内有效
+	 * 
+	 * @param entityClass
+	 * @param id
+	 * @param lockMode
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public T findForUpdate(final Class<T> entityClass, PK id, LockMode lockMode){
+		String hql = getSelectHql(entityClass).append(" and model.id = :id").toString();
+		Query query = getSession().createQuery(hql);
+		query.setLockMode("model", lockMode);
+		query.setParameter("id", id);
+		List<T> list = query.list();
 
-		return null;
+		return list.get(0);
 	}
 
 	/**
@@ -94,7 +114,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 			throw new IllegalArgumentException("属性名不能为空");
 		}
 
-		String hql = getSelectHql(entityClass).append(" and mod.").append(propertyName).append(" = :").append(propertyName).toString();
+		String hql = getSelectHql(entityClass).append(" and model.").append(propertyName).append(" = :").append(propertyName).toString();
 		Query query = getSession().createQuery(hql);
 		query.setParameter(propertyName, value);
 		
@@ -118,7 +138,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 		
 		StringBuilder hqlBuf = getSelectHql(entityClass);
 		for(String propertyName : propertyNames){
-			hqlBuf.append(" and mod.").append(propertyName).append(" = :").append(propertyName);
+			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		}
 		
 		Query query = getSession().createQuery(hqlBuf.toString());
@@ -146,7 +166,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 			throw new IllegalArgumentException("属性名不能为空");
 		}
 
-		String hql = getSelectHql(entityClass).append(" and mod.").append(propertyName).append(" = :").append(propertyName).toString();
+		String hql = getSelectHql(entityClass).append(" and model.").append(propertyName).append(" = :").append(propertyName).toString();
 		Query query = getSession().createQuery(hql);
 		query.setParameter(propertyName, value);
 		
@@ -175,7 +195,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 		
 		StringBuilder hqlBuf = getSelectHql(entityClass);
 		for(String propertyName : propertyNames){
-			hqlBuf.append(" and mod.").append(propertyName).append(" = :").append(propertyName);
+			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		}
 		
 		Query query = getSession().createQuery(hqlBuf.toString());
@@ -219,7 +239,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 		}
 		
 		StringBuilder hqlBuf = getCountHql(entityClass);
-		hqlBuf.append(" and mod.").append(propertyName).append(" = :").append(propertyName);
+		hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		
 		Query query = getSession().createQuery(hqlBuf.toString());
 		query.setParameter(propertyName, value);
@@ -243,7 +263,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 		
 		StringBuilder hqlBuf = getCountHql(entityClass);
 		for(String propertyName : propertyNames){
-			hqlBuf.append(" and mod.").append(propertyName).append(" = :").append(propertyName);
+			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		}
 		
 		Query query = getSession().createQuery(hqlBuf.toString());
@@ -253,6 +273,34 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 		}
 		
 		return (long) query.uniqueResult();
+	}
+	
+	/**
+	 * 更新实体
+	 * 
+	 * @param entityClass
+	 * @param entity
+	 */
+	@Override
+	public void update(final Class<T> entityClass, T entity){
+		getSession().update(entityClass.getName(), entity);
+	}
+	
+	/**
+	 * 批量更新
+	 * 
+	 * @param entityClass
+	 * @param entities
+	 */
+	@Override
+	public void update(final Class<T> entityClass, Collection<T> entities){
+		if(Collections3.isEmpty(entities)){
+			return;
+		}
+		
+		for(T entity : entities){
+			update(entityClass, entity);
+		}
 	}
 }
 

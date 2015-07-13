@@ -33,7 +33,7 @@ public class HibernateDaoSupport {
 	 */
 	public static StringBuilder getSelectHql(final Class<?> entityClass){
 		StringBuilder hqlBuf = new StringBuilder("select ");
-		hqlBuf.append(" mod from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
+		hqlBuf.append(" model from ").append(entityClass.getSimpleName()).append(" as model where 1=1");
 		
 		return hqlBuf;
 	}
@@ -53,11 +53,11 @@ public class HibernateDaoSupport {
 		
 		StringBuilder hqlBuf = new StringBuilder("select");
 		for(int i=0; i<len; i++){
-			hqlBuf.append(" mod.").append(properties[i]).append(",");
+			hqlBuf.append(" model.").append(properties[i]).append(",");
 		}
 		
 		hqlBuf.deleteCharAt(hqlBuf.length() - 1);
-		hqlBuf.append(" from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
+		hqlBuf.append(" from ").append(entityClass.getSimpleName()).append(" as model where 1=1");
 		
 		return hqlBuf;
 	}
@@ -70,6 +70,6 @@ public class HibernateDaoSupport {
 	 */
 	public static StringBuilder getCountHql(final Class<?> entityClass){
 		StringBuilder hqlBuf = new StringBuilder();
-		return hqlBuf.append("select count(*) from ").append(entityClass.getSimpleName()).append(" as mod where 1=1");
+		return hqlBuf.append("select count(*) from ").append(entityClass.getSimpleName()).append(" as model where 1=1");
 	}
 }

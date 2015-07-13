@@ -1,8 +1,13 @@
 package com.lin.service.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -86,4 +91,69 @@ public class BaseServiceTest {
 	public void countByPropertiesTest(){
 		System.out.println(baseService.countByProperties(new String[]{"name", "version"}, new Object[]{"xxx1", 2}));
 	}
+	
+	@Test
+	public void updateTest(){
+		Tester er = new Tester();
+		er.setVersion(3);
+		er.setId(1);
+		er.setName("xx");
+		baseService.update(er);
+	}
+	
+	@Test
+	public void updateAllTest(){
+		List<Tester> list = new ArrayList<Tester>();
+		for(int i=0; i<100; i++){
+			Tester er = new Tester();
+			er.setVersion(4);
+			er.setId(i + 1);
+			er.setName("xx" + i);
+			list.add(er);
+		}
+		
+		baseService.update(list);
+	}
+	
+	@Test
+	public void findForUpdateTest(){
+		baseService.findForUpdate(1);
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				baseService.findForUpdate(1);
+//			}
+//		}).start();
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//				updateTest();
+//			}
+//		}).start();
+//		
+//		try {
+//			Thread.sleep(10000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
