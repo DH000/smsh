@@ -6,8 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,6 +19,8 @@ import com.lin.service.IBaseService;
 public class BaseServiceTest {
 	@Resource
 	private IBaseService<Tester, Integer> baseService;
+	@Resource
+	private ITesterService testerService;
 	
 	@Test
 	public void saveTest(){
@@ -143,6 +143,10 @@ public class BaseServiceTest {
 //		}
 	}
 	
+	@Test
+	public void forUpdateTest(){
+		testerService.forUpdateTest(1);
+	}
 }
 
 

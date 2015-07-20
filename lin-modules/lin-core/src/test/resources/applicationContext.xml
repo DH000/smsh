@@ -117,7 +117,7 @@
 	<aop:config>
 		<!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 -->
 		<aop:pointcut id="txMethods"
-			expression="execution(* com.lin.service.impl.*.*(..))" />
+			expression="execution(* com.lin.service..impl.*.*(..))" />
 		<!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txMethods" />
 	</aop:config>

@@ -1,4 +1,4 @@
-package com.lin.dao.impl.test;
+package com.lin.dao.test.impl;
 
 import org.springframework.stereotype.Repository;
 

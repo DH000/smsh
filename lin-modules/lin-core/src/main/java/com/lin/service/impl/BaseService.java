@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.LockMode;
+import org.springframework.stereotype.Service;
 
 import com.lin.dao.IBaseDao;
 import com.lin.service.IBaseService;
@@ -23,6 +24,7 @@ import com.lin.utils.Reflections;
  * @param <T>
  * @param <PK>
  */
+@Service
 public class BaseService<T, PK extends Serializable> implements IBaseService<T, PK> {
 	protected Class<T> entityClass;
 	@Resource
