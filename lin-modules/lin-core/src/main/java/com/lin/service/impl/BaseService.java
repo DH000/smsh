@@ -3,6 +3,7 @@ package com.lin.service.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -240,5 +241,73 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	@Override
 	public void update(Collection<T> entities){
 		baseDao.update(getEntityClass(), entities);
+	}
+	
+	/**
+	 * 通过id获取指定属性
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> findProperties(String[] beanPropertyNames, PK id){
+		return baseDao.findProperties(beanPropertyNames, id);
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyNames		参数字段
+	 * @param values			参数值
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String[] propertyNames, Object[] values){
+		return baseDao.findProperties(beanPropertyNames, propertyNames, values);
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyName		参数字段
+	 * @param value				参数值
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String propertyName, Object value){
+		return baseDao.findProperties(beanPropertyNames, propertyName, value);
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyNames		参数字段
+	 * @param values			参数值
+	 * @param offset			记录下标
+	 * @param length			
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String[] propertyNames, Object[] values, Integer offset, Integer length){
+		return baseDao.findPropertiesForPage(beanPropertyNames, propertyNames, values, offset, length);
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyName		参数字段
+	 * @param value				参数值
+	 * @param offset			记录下标
+	 * @param length			
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String propertyName, Object value, Integer offset, Integer length){
+		return baseDao.findPropertiesForPage(beanPropertyNames, propertyName, value, offset, length);
 	}
 }

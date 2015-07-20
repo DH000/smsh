@@ -3,6 +3,7 @@ package com.lin.dao.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.LockMode;
@@ -301,6 +302,74 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 		for(T entity : entities){
 			update(entityClass, entity);
 		}
+	}
+	
+	/**
+	 * 通过id获取指定属性
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> findProperties(String[] beanPropertyNames, PK id){
+		return null;
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyNames		参数字段
+	 * @param values			参数值
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String[] propertyNames, Object[] values){
+		return null;
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyName		参数字段
+	 * @param value				参数值
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String propertyName, Object value){
+		return null;
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyNames		参数字段
+	 * @param values			参数值
+	 * @param offset			记录下标
+	 * @param length			
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String[] propertyNames, Object[] values, Integer offset, Integer length){
+		return null;
+	}
+	
+	/**
+	 * 获取指定属性字段
+	 * 
+	 * @param beanPropertyNames	结果字段
+	 * @param propertyName		参数字段
+	 * @param value				参数值
+	 * @param offset			记录下标
+	 * @param length			
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String propertyName, Object value, Integer offset, Integer length){
+		return null;
 	}
 }
 
