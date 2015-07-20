@@ -29,7 +29,7 @@ public class BaseServiceTest {
 		
 		for(int i=0; i<100; i++){
 			er.setName("hello" + i);
-			System.out.println(baseService.save(er));
+			baseService.save(er);
 		}
 	}
 	
@@ -146,6 +146,31 @@ public class BaseServiceTest {
 	@Test
 	public void forUpdateTest(){
 		testerService.forUpdateTest(1);
+	}
+	
+	@Test
+	public void findPropertiesById(){
+		System.out.println(testerService.findProperties(new String[]{"name", "tName"}, 1));
+	}
+	
+	@Test
+	public void findProsByPro(){
+		System.out.println(testerService.findProperties(new String[]{"name", "tName"}, "name", "000"));
+	}
+	
+	@Test
+	public void findProsByProForPage(){
+		System.out.println(testerService.findPropertiesForPage(new String[]{"id", "name", "tName"}, "name", "000", 10, 5));
+	}
+	
+	@Test
+	public void findProsByPros(){
+		System.out.println(testerService.findProperties(new String[]{"name", "tName"}, new String[]{"name", "id"}, new Object[]{"000", 1}));
+	}
+	
+	@Test
+	public void findProsByProsForPage(){
+		System.out.println(testerService.findPropertiesForPage(new String[]{"id", "name", "tName", "version"}, new String[]{"name", "version"}, new Object[]{"000", 4}, 10, 5));
 	}
 }
 

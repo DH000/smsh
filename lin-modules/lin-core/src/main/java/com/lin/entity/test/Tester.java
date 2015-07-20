@@ -19,6 +19,7 @@ public class Tester implements Serializable {
 	private Integer id;
 	private String name;
 	private Integer version;
+	private String tName;
 
 	public Integer getId() {
 		return id;
@@ -44,4 +45,12 @@ public class Tester implements Serializable {
 		this.version = version;
 	}
 
+	public String gettName() {
+		return tName;
+	}
+
+	public void settName(String tName) {
+		this.tName = tName;
+	}
+	
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.lin.dao.IBaseDao;
 import com.lin.service.IBaseService;
+import com.lin.utils.Collections3;
 import com.lin.utils.Reflections;
 
 /**
@@ -59,37 +60,35 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 
 		return baseDao.find(getEntityClass(), id);
 	}
-	
+
 	/**
-	 * 给行数据上锁
-	 * 在一个事务内有效
+	 * 给行数据上锁 在一个事务内有效
 	 * 
 	 * @param id
 	 * @return
 	 */
 	@Override
-	public T findForUpdate(PK id){
+	public T findForUpdate(PK id) {
 		if (null == id) {
 			throw new IllegalArgumentException("id不能为null");
 		}
-		
+
 		return findForUpdate(id, LockMode.UPGRADE_NOWAIT);
 	}
-	
+
 	/**
-	 * 给数据上锁
-	 * 在一个事务内有效
+	 * 给数据上锁 在一个事务内有效
 	 * 
 	 * @param id
 	 * @param lockMode
 	 * @return
 	 */
 	@Override
-	public T findForUpdate(PK id, LockMode lockMode){
+	public T findForUpdate(PK id, LockMode lockMode) {
 		if (null == id) {
 			throw new IllegalArgumentException("id不能为null");
 		}
-		
+
 		return baseDao.findForUpdate(getEntityClass(), id, lockMode);
 	}
 
@@ -115,12 +114,12 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public PK save(T entity) {
+	public void save(T entity) {
 		if (null == entity) {
 			throw new IllegalArgumentException("entity参数不能为null");
 		}
 
-		return baseDao.save(entity);
+		baseDao.save(entity);
 	}
 
 	/**
@@ -145,7 +144,11 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public List<T> findByProperty(String propertyName, Object value){
+	public List<T> findByProperty(String propertyName, Object value) {
+		if (null == propertyName) {
+			throw new IllegalArgumentException("属性参数不能为null");
+		}
+		
 		return baseDao.findByProperty(getEntityClass(), propertyName, value);
 	}
 
@@ -157,7 +160,10 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public List<T> findByProperties(String[] propertyNames, Object[] values){
+	public List<T> findByProperties(String[] propertyNames, Object[] values) {
+		if (null == propertyNames || 0 == propertyNames.length) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
 		return baseDao.findByProperties(getEntityClass(), propertyNames, values);
 	}
 
@@ -171,7 +177,10 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public List<T> findByPropertyForPage(String propertyName, Object value, int offset, int length){
+	public List<T> findByPropertyForPage(String propertyName, Object value, Integer offset, Integer length) {
+		if (null == propertyName) {
+			throw new IllegalArgumentException("属性参数不能为null");
+		}
 		return baseDao.findByPropertyForPage(getEntityClass(), propertyName, value, offset, length);
 	}
 
@@ -185,7 +194,10 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public List<T> findByPropertiesForPage(String[] propertyNames, Object[] values, int offset, int length){
+	public List<T> findByPropertiesForPage(String[] propertyNames, Object[] values, Integer offset, Integer length) {
+		if (null == propertyNames || 0 == propertyNames.length) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
 		return baseDao.findByPropertiesForPage(getEntityClass(), propertyNames, values, offset, length);
 	}
 
@@ -195,7 +207,7 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public long count(){
+	public long count() {
 		return baseDao.count(getEntityClass());
 	}
 
@@ -207,7 +219,10 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public long countByProperty(String propertyName, Object value){
+	public long countByProperty(String propertyName, Object value) {
+		if (null == propertyName) {
+			throw new IllegalArgumentException("属性参数不能为null");
+		}
 		return baseDao.countByProperty(getEntityClass(), propertyName, value);
 	}
 
@@ -219,95 +234,150 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 	 * @return
 	 */
 	@Override
-	public long countByProperties(String[] propertyNames, Object[] values){
+	public long countByProperties(String[] propertyNames, Object[] values) {
+		if (null == propertyNames || 0 == propertyNames.length) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
 		return baseDao.countByProperties(getEntityClass(), propertyNames, values);
 	}
-	
+
 	/**
 	 * 更新实体
 	 * 
 	 * @param entity
 	 */
 	@Override
-	public void update(T entity){
+	public void update(T entity) {
+		if (null == entity) {
+			throw new IllegalArgumentException("entity参数不能为null");
+		}
+		
 		baseDao.update(getEntityClass(), entity);
 	}
-	
+
 	/**
 	 * 批量更新
 	 * 
 	 * @param entities
 	 */
 	@Override
-	public void update(Collection<T> entities){
+	public void update(Collection<T> entities) {
+		if(Collections3.isEmpty(entities)){
+			throw new IllegalArgumentException("entities参数不能为空");
+		}
 		baseDao.update(getEntityClass(), entities);
 	}
-	
+
 	/**
 	 * 通过id获取指定属性
 	 * 
-	 * @param beanPropertyNames	结果字段
+	 * @param resProNames
+	 *            结果字段
 	 * @param id
 	 * @return
 	 */
 	@Override
-	public Map<String, Object> findProperties(String[] beanPropertyNames, PK id){
-		return baseDao.findProperties(beanPropertyNames, id);
+	public Map<String, Object> findProperties(String[] resProNames, PK id) {
+		if (null == resProNames || 0 == resProNames.length) {
+			throw new IllegalArgumentException("结果属性参数不能为空");
+		}
+		if(null == id){
+			throw new IllegalArgumentException("id参数不能为null");
+		}
+		return baseDao.findProperties(getEntityClass(), resProNames, id);
 	}
-	
+
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyNames		参数字段
-	 * @param values			参数值
+	 * @param resProNames
+	 *            结果字段
+	 * @param propertyNames
+	 *            参数字段
+	 * @param values
+	 *            参数值
 	 * @return
 	 */
 	@Override
-	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String[] propertyNames, Object[] values){
-		return baseDao.findProperties(beanPropertyNames, propertyNames, values);
+	public List<Map<String, Object>> findProperties(String[] resProNames, String[] propertyNames, Object[] values) {
+		if (null == resProNames || 0 == resProNames.length) {
+			throw new IllegalArgumentException("结果属性字段不能为空");
+		}
+		if (null == propertyNames || 0 == propertyNames.length) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
+		return baseDao.findProperties(getEntityClass(), resProNames, propertyNames, values);
 	}
-	
+
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyName		参数字段
-	 * @param value				参数值
+	 * @param resProNames
+	 *            结果字段
+	 * @param propertyName
+	 *            参数字段
+	 * @param value
+	 *            参数值
 	 * @return
 	 */
 	@Override
-	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String propertyName, Object value){
-		return baseDao.findProperties(beanPropertyNames, propertyName, value);
+	public List<Map<String, Object>> findProperties(String[] resProNames, String propertyName, Object value) {
+		if (null == resProNames || 0 == resProNames.length) {
+			throw new IllegalArgumentException("结果属性字段不能为空");
+		}
+		if (null == propertyName) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
+		return findProperties(resProNames, new String[] { propertyName }, new Object[] { value });
 	}
-	
+
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyNames		参数字段
-	 * @param values			参数值
-	 * @param offset			记录下标
-	 * @param length			
+	 * @param resProNames
+	 *            结果字段
+	 * @param propertyNames
+	 *            参数字段
+	 * @param values
+	 *            参数值
+	 * @param offset
+	 *            记录下标
+	 * @param length
 	 * @return
 	 */
 	@Override
-	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String[] propertyNames, Object[] values, Integer offset, Integer length){
-		return baseDao.findPropertiesForPage(beanPropertyNames, propertyNames, values, offset, length);
+	public List<Map<String, Object>> findPropertiesForPage(String[] resProNames, String[] propertyNames, Object[] values, Integer offset, Integer length) {
+		if (null == resProNames || 0 == resProNames.length) {
+			throw new IllegalArgumentException("结果属性字段不能为空");
+		}
+		if (null == propertyNames || 0 == propertyNames.length) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
+		return baseDao.findPropertiesForPage(getEntityClass(), resProNames, propertyNames, values, offset, length);
 	}
-	
+
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyName		参数字段
-	 * @param value				参数值
-	 * @param offset			记录下标
-	 * @param length			
+	 * @param resProNames
+	 *            结果字段
+	 * @param propertyName
+	 *            参数字段
+	 * @param value
+	 *            参数值
+	 * @param offset
+	 *            记录下标
+	 * @param length
 	 * @return
 	 */
 	@Override
-	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String propertyName, Object value, Integer offset, Integer length){
-		return baseDao.findPropertiesForPage(beanPropertyNames, propertyName, value, offset, length);
+	public List<Map<String, Object>> findPropertiesForPage(String[] resProNames, String propertyName, Object value, Integer offset, Integer length) {
+		if (null == resProNames || 0 == resProNames.length) {
+			throw new IllegalArgumentException("结果属性字段不能为空");
+		}
+		if (null == propertyName) {
+			throw new IllegalArgumentException("属性参数不能为空");
+		}
+		return findPropertiesForPage(resProNames, new String[] { propertyName }, new Object[] { value }, offset, length);
 	}
 }

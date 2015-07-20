@@ -1,11 +1,12 @@
 package com.lin.dao.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -43,10 +44,9 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 
 		return list.get(0);
 	}
-	
+
 	/**
-	 * 给数据上锁
-	 * 在一个事务内有效
+	 * 给数据上锁 在一个事务内有效
 	 * 
 	 * @param entityClass
 	 * @param id
@@ -55,7 +55,7 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public T findForUpdate(final Class<T> entityClass, PK id, LockMode lockMode){
+	public T findForUpdate(final Class<T> entityClass, PK id, LockMode lockMode) {
 		String hql = getSelectHql(entityClass).append(" and model.id = :id").toString();
 		Query query = getSession().createQuery(hql);
 		query.setLockMode("model", lockMode);
@@ -111,14 +111,10 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByProperty(final Class<T> entityClass, String propertyName, Object value) {
-		if (StringUtils.isBlank(propertyName)) {
-			throw new IllegalArgumentException("属性名不能为空");
-		}
-
 		String hql = getSelectHql(entityClass).append(" and model.").append(propertyName).append(" = :").append(propertyName).toString();
 		Query query = getSession().createQuery(hql);
 		query.setParameter(propertyName, value);
-		
+
 		return query.list();
 	}
 
@@ -133,23 +129,19 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByProperties(final Class<T> entityClass, String[] propertyNames, Object[] values) {
-		if (null == propertyNames || 0 == propertyNames.length) {
-			throw new IllegalArgumentException("属性名不能为空");
-		}
-		
 		StringBuilder hqlBuf = getSelectHql(entityClass);
-		for(String propertyName : propertyNames){
+		for (String propertyName : propertyNames) {
 			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		}
-		
+
 		Query query = getSession().createQuery(hqlBuf.toString());
-		for(int i=0, len=propertyNames.length; i<len; i++){
+		for (int i = 0, len = propertyNames.length; i < len; i++) {
 			query.setParameter(propertyNames[i], values[i]);
 		}
-		
+
 		return query.list();
 	}
-	
+
 	/**
 	 * 通过属性名分页查询
 	 * 
@@ -162,21 +154,21 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<T> findByPropertyForPage(final Class<T> entityClass, String propertyName, Object value, int offset, int length){
-		if (StringUtils.isBlank(propertyName)) {
-			throw new IllegalArgumentException("属性名不能为空");
-		}
-
+	public List<T> findByPropertyForPage(final Class<T> entityClass, String propertyName, Object value, Integer offset, Integer length) {
 		String hql = getSelectHql(entityClass).append(" and model.").append(propertyName).append(" = :").append(propertyName).toString();
 		Query query = getSession().createQuery(hql);
 		query.setParameter(propertyName, value);
-		
-		query.setFirstResult(offset);
-		query.setMaxResults(length);
-		
+
+		if(null != offset){
+			query.setFirstResult(offset);
+		}
+		if(null != length){
+			query.setMaxResults(length);
+		}
+
 		return query.list();
 	}
-	
+
 	/**
 	 * 通过多个属性名分页查询
 	 * 
@@ -189,27 +181,27 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<T> findByPropertiesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, int offset, int length){
-		if (null == propertyNames || 0 == propertyNames.length) {
-			throw new IllegalArgumentException("属性名不能为空");
-		}
-		
+	public List<T> findByPropertiesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, Integer offset, Integer length) {
 		StringBuilder hqlBuf = getSelectHql(entityClass);
-		for(String propertyName : propertyNames){
+		for (String propertyName : propertyNames) {
 			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		}
-		
+
 		Query query = getSession().createQuery(hqlBuf.toString());
-		for(int i=0, len=propertyNames.length; i<len; i++){
+		for (int i = 0, len = propertyNames.length; i < len; i++) {
 			query.setParameter(propertyNames[i], values[i]);
 		}
-		
-		query.setFirstResult(offset);
-		query.setMaxResults(length);
-		
+
+		if(null != offset){
+			query.setFirstResult(offset);
+		}
+		if(null != length){
+			query.setMaxResults(length);
+		}
+
 		return query.list();
 	}
-	
+
 	/**
 	 * 统计记录总数
 	 * 
@@ -217,14 +209,14 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 * @return
 	 */
 	@Override
-	public long count(final Class<T> entityClass){
+	public long count(final Class<T> entityClass) {
 		StringBuilder hqlBuf = getCountHql(entityClass);
-		
+
 		Query query = getSession().createQuery(hqlBuf.toString());
-		
+
 		return (long) query.uniqueResult();
 	}
-	
+
 	/**
 	 * 通过某个属性统计记录总数
 	 * 
@@ -234,20 +226,16 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 * @return
 	 */
 	@Override
-	public long countByProperty(final Class<T> entityClass, String propertyName, Object value){
-		if (StringUtils.isBlank(propertyName)) {
-			throw new IllegalArgumentException("属性名不能为空");
-		}
-		
+	public long countByProperty(final Class<T> entityClass, String propertyName, Object value) {
 		StringBuilder hqlBuf = getCountHql(entityClass);
 		hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
-		
+
 		Query query = getSession().createQuery(hqlBuf.toString());
 		query.setParameter(propertyName, value);
-		
+
 		return (long) query.uniqueResult();
 	}
-	
+
 	/**
 	 * 通过某个多个属性统计记录总数
 	 * 
@@ -257,25 +245,21 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 * @return
 	 */
 	@Override
-	public long countByProperties(final Class<T> entityClass, String[] propertyNames, Object[] values){
-		if (null == propertyNames || 0 == propertyNames.length) {
-			throw new IllegalArgumentException("属性名不能为空");
-		}
-		
+	public long countByProperties(final Class<T> entityClass, String[] propertyNames, Object[] values) {
 		StringBuilder hqlBuf = getCountHql(entityClass);
-		for(String propertyName : propertyNames){
+		for (String propertyName : propertyNames) {
 			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
 		}
-		
+
 		Query query = getSession().createQuery(hqlBuf.toString());
-		
-		for(int i=0, len=propertyNames.length; i<len; i++){
+
+		for (int i = 0, len = propertyNames.length; i < len; i++) {
 			query.setParameter(propertyNames[i], values[i]);
 		}
-		
+
 		return (long) query.uniqueResult();
 	}
-	
+
 	/**
 	 * 更新实体
 	 * 
@@ -283,10 +267,10 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 * @param entity
 	 */
 	@Override
-	public void update(final Class<T> entityClass, T entity){
+	public void update(final Class<T> entityClass, T entity) {
 		getSession().update(entityClass.getName(), entity);
 	}
-	
+
 	/**
 	 * 批量更新
 	 * 
@@ -294,97 +278,153 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 	 * @param entities
 	 */
 	@Override
-	public void update(final Class<T> entityClass, Collection<T> entities){
-		if(Collections3.isEmpty(entities)){
+	public void update(final Class<T> entityClass, Collection<T> entities) {
+		if (Collections3.isEmpty(entities)) {
 			return;
 		}
-		
-		for(T entity : entities){
+
+		for (T entity : entities) {
 			update(entityClass, entity);
 		}
 	}
-	
+
 	/**
 	 * 通过id获取指定属性
 	 * 
-	 * @param beanPropertyNames	结果字段
+	 * @param resProNames
+	 *            结果字段
 	 * @param id
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
-	public Map<String, Object> findProperties(String[] beanPropertyNames, PK id){
-		return null;
+	public Map<String, Object> findProperties(final Class<T> entityClass, String[] resProNames, PK id) {
+		StringBuilder hqlBuf = getSelectHql(entityClass, resProNames);
+		hqlBuf.append(" and model.id = :id");
+
+		Query query = getSession().createQuery(hqlBuf.toString());
+		query.setParameter("id", id);
+		List list = query.list();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (list.isEmpty()) {
+			return map;
+		}
+
+		int len = resProNames.length;
+		if (1 == len) {
+			map.put(resProNames[0], list.get(0));
+			return map;
+		}
+
+		Object[] objArr = (Object[]) list.get(0);
+		for (int i = 0; i < len; i++) {
+			map.put(resProNames[i], objArr[i]);
+		}
+
+		return map;
 	}
-	
+
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyNames		参数字段
-	 * @param values			参数值
+	 * @param resProNames
+	 *            结果字段
+	 * @param propertyNames
+	 *            参数字段
+	 * @param values
+	 *            参数值
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
-	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String[] propertyNames, Object[] values){
-		return null;
+	public List<Map<String, Object>> findProperties(final Class<T> entityClass, String[] resProNames, String[] propertyNames, Object[] values) {
+		StringBuilder hqlBuf = getSelectHql(entityClass, resProNames);
+
+		for (String propertyName : propertyNames) {
+			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
+		}
+		Query query = getSession().createQuery(hqlBuf.toString());
+		for (int i = 0, len = propertyNames.length; i < len; i++) {
+			query.setParameter(propertyNames[i], values[i]);
+		}
+
+		List list = query.list();
+		List<Map<String, Object>> resList = new ArrayList<>();
+		if (list.isEmpty()) {
+			return resList;
+		}
+
+		int len = resProNames.length;
+		for (Object obj : list) {
+			Map<String, Object> map = new HashMap<>();
+			if (1 == len) {
+				map.put(resProNames[0], obj);
+			} else {
+				Object[] objArr = (Object[]) obj;
+				for (int i = 0; i < len; i++) {
+					map.put(resProNames[i], objArr[i]);
+				}
+			}
+			resList.add(map);
+		}
+
+		return resList;
 	}
-	
+
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyName		参数字段
-	 * @param value				参数值
+	 * @param resProNames
+	 *            结果字段
+	 * @param propertyNames
+	 *            参数字段
+	 * @param values
+	 *            参数值
+	 * @param offset
+	 *            记录下标
+	 * @param length
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
-	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String propertyName, Object value){
-		return null;
-	}
-	
-	/**
-	 * 获取指定属性字段
-	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyNames		参数字段
-	 * @param values			参数值
-	 * @param offset			记录下标
-	 * @param length			
-	 * @return
-	 */
-	@Override
-	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String[] propertyNames, Object[] values, Integer offset, Integer length){
-		return null;
-	}
-	
-	/**
-	 * 获取指定属性字段
-	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyName		参数字段
-	 * @param value				参数值
-	 * @param offset			记录下标
-	 * @param length			
-	 * @return
-	 */
-	@Override
-	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String propertyName, Object value, Integer offset, Integer length){
-		return null;
+	public List<Map<String, Object>> findPropertiesForPage(final Class<T> entityClass, String[] resProNames, String[] propertyNames, Object[] values, Integer offset, Integer length) {
+		StringBuilder hqlBuf = getSelectHql(entityClass, resProNames);
+
+		for (String propertyName : propertyNames) {
+			hqlBuf.append(" and model.").append(propertyName).append(" = :").append(propertyName);
+		}
+		Query query = getSession().createQuery(hqlBuf.toString());
+		for (int i = 0, len = propertyNames.length; i < len; i++) {
+			query.setParameter(propertyNames[i], values[i]);
+		}
+		if(null != offset){
+			query.setFirstResult(offset);
+		}
+		if(null != length){
+			query.setMaxResults(length);
+		}
+
+		List list = query.list();
+		List<Map<String, Object>> resList = new ArrayList<>();
+		if (list.isEmpty()) {
+			return resList;
+		}
+
+		int len = resProNames.length;
+		for (Object obj : list) {
+			Map<String, Object> map = new HashMap<>();
+			if (1 == len) {
+				map.put(resProNames[0], obj);
+			} else {
+				Object[] objArr = (Object[]) obj;
+				for (int i = 0; i < len; i++) {
+					map.put(resProNames[i], objArr[i]);
+				}
+			}
+			resList.add(map);
+		}
+
+		return resList;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

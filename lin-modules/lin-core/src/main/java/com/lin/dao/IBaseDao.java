@@ -92,7 +92,7 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @param length
 	 * @return
 	 */
-	public List<T> findByPropertyForPage(final Class<T> entityClass, String propertyName, Object value, int offset, int length);
+	public List<T> findByPropertyForPage(final Class<T> entityClass, String propertyName, Object value, Integer offset, Integer length);
 	
 	/**
 	 * 通过多个属性名分页查询
@@ -104,7 +104,7 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @param length
 	 * @return
 	 */
-	public List<T> findByPropertiesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, int offset, int length);
+	public List<T> findByPropertiesForPage(final Class<T> entityClass, String[] propertyNames, Object[] values, Integer offset, Integer length);
 	
 	/**
 	 * 统计记录总数
@@ -153,53 +153,31 @@ public interface IBaseDao<T, PK extends Serializable> {
 	/**
 	 * 通过id获取指定属性
 	 * 
-	 * @param beanPropertyNames	结果字段
+	 * @param resProNames	结果字段
 	 * @param id
 	 * @return
 	 */
-	public Map<String, Object> findProperties(String[] beanPropertyNames, PK id);
+	public Map<String, Object> findProperties(final Class<T> entityClass, String[] resProNames, PK id);
 	
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
+	 * @param resProNames		结果字段
 	 * @param propertyNames		参数字段
 	 * @param values			参数值
 	 * @return
 	 */
-	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String[] propertyNames, Object[] values);
+	public List<Map<String, Object>> findProperties(final Class<T> entityClass, String[] resProNames, String[] propertyNames, Object[] values);
 	
 	/**
 	 * 获取指定属性字段
 	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyName		参数字段
-	 * @param value				参数值
-	 * @return
-	 */
-	public List<Map<String, Object>> findProperties(String[] beanPropertyNames, String propertyName, Object value);
-	
-	/**
-	 * 获取指定属性字段
-	 * 
-	 * @param beanPropertyNames	结果字段
+	 * @param resProNames		结果字段
 	 * @param propertyNames		参数字段
 	 * @param values			参数值
 	 * @param offset			记录下标
 	 * @param length			
 	 * @return
 	 */
-	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String[] propertyNames, Object[] values, Integer offset, Integer length);
-	
-	/**
-	 * 获取指定属性字段
-	 * 
-	 * @param beanPropertyNames	结果字段
-	 * @param propertyName		参数字段
-	 * @param value				参数值
-	 * @param offset			记录下标
-	 * @param length			
-	 * @return
-	 */
-	public List<Map<String, Object>> findPropertiesForPage(String[] beanPropertyNames, String propertyName, Object value, Integer offset, Integer length);
+	public List<Map<String, Object>> findPropertiesForPage(final Class<T> entityClass, String[] resProNames, String[] propertyNames, Object[] values, Integer offset, Integer length);
 }

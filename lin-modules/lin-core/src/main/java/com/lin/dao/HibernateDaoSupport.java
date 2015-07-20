@@ -13,7 +13,7 @@ import org.hibernate.SessionFactory;
 * @date Jun 29, 2015 2:45:10 PM 
 *
  */
-public class HibernateDaoSupport {
+public abstract class HibernateDaoSupport {
 	@Resource
 	private SessionFactory sessionFactory;
 
