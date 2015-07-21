@@ -109,4 +109,9 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txMethods" />
 	</aop:config>
 
+	<!-- velocity配置 -->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="resourceLoaderPath" value="/vm/,/vm/test/" />
+		<property name="configLocation" value="classpath:velocity.properties" />
+	</bean>
 </beans>

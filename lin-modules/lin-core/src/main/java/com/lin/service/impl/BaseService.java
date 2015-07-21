@@ -380,4 +380,24 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 		}
 		return findPropertiesForPage(resProNames, new String[] { propertyName }, new Object[] { value }, offset, length);
 	}
+	
+	/**
+	 * 删除
+	 * 
+	 * @param entity
+	 */
+	@Override
+	public void delete(T entity){
+		baseDao.delete(entity);
+	}
+	
+	/**
+	 * 批量删除
+	 * 
+	 * @param entities
+	 */
+	@Override
+	public void delete(Collection<T> entities){
+		baseDao.delete(entities);
+	}
 }

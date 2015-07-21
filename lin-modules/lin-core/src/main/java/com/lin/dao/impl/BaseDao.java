@@ -427,4 +427,26 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 
 		return resList;
 	}
+	
+	/**
+	 * 删除
+	 * 
+	 * @param entity
+	 */
+	@Override
+	public void delete(T entity){
+		getSession().delete(entity);
+	}
+	
+	/**
+	 * 批量删除
+	 * 
+	 * @param entities
+	 */
+	@Override
+	public void delete(Collection<T> entities){
+		for(T entity : entities){
+			delete(entity);
+		}
+	}
 }

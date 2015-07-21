@@ -180,4 +180,18 @@ public interface IBaseDao<T, PK extends Serializable> {
 	 * @return
 	 */
 	public List<Map<String, Object>> findPropertiesForPage(final Class<T> entityClass, String[] resProNames, String[] propertyNames, Object[] values, Integer offset, Integer length);
+
+	/**
+	 * 删除
+	 * 
+	 * @param entity
+	 */
+	public void delete(T entity);
+	
+	/**
+	 * 批量删除
+	 * 
+	 * @param entities
+	 */
+	public void delete(Collection<T> entities);
 }

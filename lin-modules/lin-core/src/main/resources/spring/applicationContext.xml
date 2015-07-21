@@ -108,5 +108,12 @@
 		<!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txMethods" />
 	</aop:config>
+	
+	<!-- velocity配置 -->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<!-- 多个路径义逗号分隔  -->
+		<property name="resourceLoaderPath" value="/vm/" />
+		<property name="configLocation" value="classpath:velocity.properties" />
+	</bean>
 
 </beans>

@@ -215,4 +215,18 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @return
 	 */
 	public List<Map<String, Object>> findPropertiesForPage(String[] resProNames, String propertyName, Object value, Integer offset, Integer length);
+	
+	/**
+	 * 删除
+	 * 
+	 * @param entity
+	 */
+	public void delete(T entity);
+	
+	/**
+	 * 批量删除
+	 * 
+	 * @param entities
+	 */
+	public void delete(Collection<T> entities);
 }

@@ -8,18 +8,15 @@
 		</layout>
 	</appender>
 	<!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
-	<appender name="FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>%d{yyyy-MM-dd}.log</File>
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<FileNamePattern>%d{yyyy-MM-dd}.log.%i.bak</FileNamePattern>
-			<MinIndex>1</MinIndex>
-			<MaxIndex>12</MaxIndex>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 当前Log文件名 -->
+		<file>/logs/current.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 非当天的Log文件压缩备份为 archive/logs/logs.2014-08-10.zip -->
+			<fileNamePattern>/logs/logs.%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<!-- 超过30天的备份文件会被删除 -->
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
-		<triggeringPolicy
-			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<MaxFileSize>100MB</MaxFileSize>
-		</triggeringPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
 		</layout>
