@@ -24,6 +24,10 @@ public final class PageInfo {
 	 */
 	private long count;
 	
+	public PageInfo() {
+		super();
+	}
+	
 	/**
 	 * 默认当前为第1页   每页展示10条
 	 * 
@@ -42,7 +46,7 @@ public final class PageInfo {
 	public PageInfo(int pageNow, long count) {
 		this(10, pageNow, count);
 	}
-
+	
 	public PageInfo(int pageSize, int pageNow, long count) {
 		super();
 		

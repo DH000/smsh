@@ -44,6 +44,31 @@ public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport imp
 
 		return list.get(0);
 	}
+	
+	/**
+	 * 分页查询
+	 * 
+	 * @param entityClass
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findForPage(final Class<T> entityClass, Integer offset, Integer length){
+		String hql = getSelectHql(entityClass).toString();
+		Query query = getSession().createQuery(hql);
+		List<T> list = query.list();
+		
+		if(null != offset){
+			query.setFirstResult(offset);
+		}
+		if(null != length){
+			query.setMaxResults(length);
+		}
+
+		return list;
+	}
 
 	/**
 	 * 给数据上锁 在一个事务内有效

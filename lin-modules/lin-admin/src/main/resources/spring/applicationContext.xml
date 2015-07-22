@@ -112,7 +112,7 @@
 	<!-- velocity配置 -->
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<!-- 多个路径义逗号分隔 -->
-		<property name="resourceLoaderPath" value="/vm/" />
+		<property name="resourceLoaderPath" value="/WEB-INF/classes/vm/" />
 		<property name="configLocation" value="classpath:velocity.properties" />
 	</bean>
 
@@ -121,10 +121,13 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="templateLoaderPaths">
 			<list>
-				<value>/template/</value>
-				<value>/template/test/</value>
+				<value>/WEB-INF/classes/template/</value>
+				<value>/WEB-INF/classes/template/test/</value>
 			</list>
 		</property>
 	</bean>
+	
+	<!-- spring context -->
+	<bean class="com.lin.utils.SpringContextUtils" />
 
 </beans>

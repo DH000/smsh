@@ -1,0 +1,29 @@
+<link href="http://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" />
+<div class="pagination pagination-centered">
+	<ul>
+		#set($curPage = $pageInfo.getPageNow())
+		#set($pageCount = $pageInfo.getPageCount())
+		#set($lastPage = $curPage - 1)
+		#set($nextPage = $curPage + 1)
+		
+		<li><a href="${url.replace('#pageNum', '1')}">&lt;&lt;</a></li>
+		#if($curPage > 1)
+		<li><a href="${url.replace('#pageNum', $lastPage.toString())}">&lt;</a></li>
+		#end
+		
+		#foreach($i in [-3..3])
+			#set($pageNum = $curPage + $i)
+			
+			#if($pageNum == $curPage)
+			<li class="active"><a href="${url.replace('#pageNum', $curPage.toString())}">$curPage</a></li>
+			#elseif($pageNum > 0 && $pageNum <= $pageCount)
+			<li><a href="${url.replace('#pageNum', $pageNum.toString())}">$pageNum</a></li>
+			#end
+		#end
+		
+		#if($curPage < $pageCount)
+		<li><a href="${url.replace('#pageNum', $nextPage.toString())}">&gt;</a></li>
+		#end
+		<li><a href="${url.replace('#pageNum', $pageCount.toString())}">&gt;&gt;</a></li>
+	</ul>
+</div>

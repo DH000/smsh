@@ -20,7 +20,6 @@ import com.lin.web.MediaTypes;
  * 广州房友圈网络技术有限公司
  */
 @Controller
-@Scope("prototype")
 public class TestController {
 
 	@RequestMapping(value = "/test/hello/{name}/name.asp", produces = {MediaTypes.JSON_UTF_8})

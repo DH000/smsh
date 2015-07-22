@@ -27,6 +27,15 @@ public interface IBaseService<T, PK extends Serializable> {
 	 * @return
 	 */
 	public T find(PK id);
+	
+	/**
+	 * 分页查询
+	 * 
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
+	public List<T> findForPage(Integer offset, Integer length);
 
 	/**
 	 * 给行数据上锁 在一个事务内有效

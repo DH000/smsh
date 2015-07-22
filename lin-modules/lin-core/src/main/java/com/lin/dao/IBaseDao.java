@@ -28,6 +28,16 @@ public interface IBaseDao<T, PK extends Serializable> {
 	public T find(final Class<T> entityClass, PK id);
 	
 	/**
+	 * 分页查询
+	 * 
+	 * @param entityClass
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
+	public List<T> findForPage(final Class<T> entityClass, Integer offset, Integer length);
+	
+	/**
 	 * 给数据上锁
 	 * 在一个事务内有效
 	 * 
