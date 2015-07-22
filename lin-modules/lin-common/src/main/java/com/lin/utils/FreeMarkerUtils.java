@@ -1,9 +1,8 @@
 package com.lin.utils;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
-
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -17,7 +16,7 @@ import freemarker.template.TemplateException;
  * @date Jul 21, 2015 6:43:13 PM
  *
  */
-public final class FreeMarkerUtils extends FreeMarkerTemplateUtils {
+public final class FreeMarkerUtils  {
 
 	/**
 	 * 合并模板
@@ -29,8 +28,9 @@ public final class FreeMarkerUtils extends FreeMarkerTemplateUtils {
 	 * @throws TemplateException
 	 */
 	public static String processTemplateIntoString(Configuration configuration, String templateName, Object model) throws IOException, TemplateException {
-		Template template = configuration.getTemplate(templateName);
-		return processTemplateIntoString(template, model);
+		StringWriter result = new StringWriter();
+		processTemplate(configuration, result, templateName, model);
+		return result.toString();
 	}
 
 	/**
@@ -42,7 +42,7 @@ public final class FreeMarkerUtils extends FreeMarkerTemplateUtils {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	public static void processTemplateIntoString(Configuration configuration, Writer writer, String templateName, Object model) throws IOException, TemplateException {
+	public static void processTemplate(Configuration configuration, Writer writer, String templateName, Object model) throws IOException, TemplateException {
 		Template template = configuration.getTemplate(templateName);
 		template.process(model, writer);
 	}

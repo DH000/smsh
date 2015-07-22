@@ -47,12 +47,14 @@ public class FreeMarkerTest {
 	@Test
 	public void markerTest2(){
 		try {
+			markerTest1();
+			
 			Map<String, Object> model = new HashMap<>();
 			model.put("name", "tem2.ftl");
 			model.put("time", new Date());
 			
 			Writer writer = new StringWriter();
-			FreeMarkerUtils.processTemplateIntoString(freeMarkerConfiguration, writer, "tem2.ftl", model);
+			FreeMarkerUtils.processTemplate(freeMarkerConfiguration, writer, "tem2.ftl", model);
 			System.out.println(writer.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
