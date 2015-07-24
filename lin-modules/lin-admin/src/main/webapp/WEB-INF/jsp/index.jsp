@@ -9,5 +9,6 @@
 <body>
 	<p>分页程序</p>
 	<p:pager url="/test/pager.asp?page=#pageNum" pageInfo="${pageInfo}"></p:pager>
+	<p>参数</p>
 </body>
 </html>

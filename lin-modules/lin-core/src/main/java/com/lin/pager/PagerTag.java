@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
+import com.lin.utils.LoggerUtils;
 import com.lin.utils.SpringContextUtils;
 
 /**
@@ -35,7 +36,7 @@ public class PagerTag extends TagSupport {
 	 * 分页模板下标
 	 * 
 	 */
-	private int type;
+	private int index;
 
 	/**
 	 * 分页信息
@@ -66,13 +67,13 @@ public class PagerTag extends TagSupport {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
-	public int getType() {
-		return type;
+	
+	public int getIndex() {
+		return index;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 	public PageInfo getPageInfo() {
@@ -85,23 +86,20 @@ public class PagerTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		String templateName = templateNames.get(type);
+		String templateName = templateNames.get(index);
 
 		Map<String, Object> model = new HashMap<>();
 		model.put("pageInfo", pageInfo);
 		model.put("url", url);
 
 		// 获取velocity引擎
-		VelocityEngine velocityEngine = (VelocityEngine) SpringContextUtils.getBean("velocityEngine");
+		VelocityEngine velocityEngine = SpringContextUtils.getBean("velocityEngine");
 		String pageHtml = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "UTF-8", model);
 
 		try {
 			pageContext.getOut().append(pageHtml);
 		} catch (IOException e) {
-			e.printStackTrace();
-			if (logger.isErrorEnabled()) {
-				logger.error("分页器io异常", e);
-			}
+			LoggerUtils.error(logger, "分页器io异常", e);
 		}
 
 		return SKIP_BODY;
