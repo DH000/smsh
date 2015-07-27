@@ -1,5 +1,7 @@
 package com.lin.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -9,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
+import com.lin.utils.LoggerUtils;
 
 /**
  * 
@@ -21,29 +26,8 @@ import com.google.common.collect.Maps;
  *
  */
 public abstract class BaseController {
-//	private static final ThreadLocal<HttpServletRequest> requestLocal = new NamedThreadLocal<>("Request object");
-//	private static final ThreadLocal<HttpServletResponse> responseLocal = new NamedThreadLocal<>("Response object");
-//	
-//	/**
-//	 * 请求时设置request和response
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	@ModelAttribute
-//	public void setRequestAndResponse(HttpServletRequest request, HttpServletResponse response){
-//		requestLocal.set(request);
-//		responseLocal.set(response);
-//	}
-//	
-//	public static HttpServletRequest getRequest() {
-//		return requestLocal.get();
-//	}
-//
-//	public static HttpServletResponse getResponse() {
-//		return responseLocal.get();
-//	}
-
+	public static final Logger logger = LoggerFactory.getLogger(BaseController.class);
+	
 	/**
 	 * 不返回空字符参数、不存在参数。多个同名参数除外，并且返回字符串数组
 	 * 
@@ -159,21 +143,21 @@ public abstract class BaseController {
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		if("unknown".equals(ip)){
+		if ("unknown".equals(ip)) {
 			return null;
 		}
 		return ip;
 	}
-	
+
 	/**
 	 * 不带参数完成url
 	 * 
 	 * @return
 	 */
-	public static String getRequestUrl(HttpServletRequest request){
+	public static String getRequestUrl(HttpServletRequest request) {
 		return request.getRequestURL().toString();
 	}
-	
+
 	/**
 	 * 设置cookie
 	 * 
@@ -184,26 +168,26 @@ public abstract class BaseController {
 	 * @param days
 	 * @param secure
 	 */
-	public static void setCookie(HttpServletResponse response, String name, String value, String domain, String uri, int days, boolean secure){
-		if(days <= 0){
+	public static void setCookie(HttpServletResponse response, String name, String value, String domain, String uri, int days, boolean secure) {
+		if (days <= 0) {
 			return;
 		}
-		
+
 		Cookie cookie = new Cookie(name, value);
-		if(!StringUtils.isEmpty(domain)){
+		if (!StringUtils.isEmpty(domain)) {
 			cookie.setDomain(domain);
 		}
-		if(!StringUtils.isEmpty(uri)){
+		if (!StringUtils.isEmpty(uri)) {
 			cookie.setPath(uri);
 		}
-		if(secure){
+		if (secure) {
 			cookie.setSecure(secure);
 		}
 		cookie.setMaxAge(3600 * 24 * days);
-		
+
 		response.addCookie(cookie);
 	}
-	
+
 	/**
 	 * 设置cookie
 	 * 
@@ -211,7 +195,64 @@ public abstract class BaseController {
 	 * @param value
 	 * @param days
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value, int days){
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value, int days) {
 		setCookie(response, name, value, request.getServerName(), request.getRequestURI(), days, false);
 	}
+
+	/**
+	 * 给客户端响应数据
+	 * 
+	 * @param response
+	 * @param message
+	 * @param contentType
+	 */
+	public static void render(HttpServletResponse response, String message, String contentType) {
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			response.setContentType(contentType);
+			out.print(message);
+			out.flush();
+		} catch (IOException e) {
+			LoggerUtils.error(logger, "响应数据回写异常", e);
+		}finally {
+			if(null != out){
+				out.close();
+			}
+		}
+	}
+	
+	/**
+	 * 响应utf8 json
+	 * 
+	 * @param response
+	 * @param message
+	 */
+	public static void renderJson(HttpServletResponse response, String message) {
+		render(response, message, MediaTypes.JSON_UTF_8);
+	}
+	
+	/**
+	 * 响应utf8 text
+	 * 
+	 * @param response
+	 * @param message
+	 */
+	public static void renderText(HttpServletResponse response, String message) {
+		render(response, message, MediaTypes.TEXT_PLAIN_UTF_8);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
