@@ -1,5 +1,6 @@
 package com.lin.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Maps;
 import com.lin.utils.LoggerUtils;
@@ -240,6 +242,40 @@ public abstract class BaseController {
 	 */
 	public static void renderText(HttpServletResponse response, String message) {
 		render(response, message, MediaTypes.TEXT_PLAIN_UTF_8);
+	}
+	
+	/**
+	 * 转换文件目标位置
+	 * 
+	 * @param multFile	spring提供文件上传方式
+	 * @param dest
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	public static void transferFileTo(MultipartFile multFile, File dest) throws IllegalStateException, IOException{
+		if (dest.exists()) {
+            if (dest.isDirectory()) {
+            	String msg = "File '" + dest + "' exists but is a directory";
+            	LoggerUtils.error(logger, msg);
+            	throw new IOException(msg);
+            }
+            if (!dest.canWrite()) {
+            	String msg = "File '" + dest + "' cannot be written to";
+            	LoggerUtils.error(logger, msg);
+            	throw new IOException(msg);
+            }
+        } else {
+            File parent = dest.getParentFile();
+            if (parent != null) {
+                if (!parent.mkdirs() && !parent.isDirectory()) {
+                	String msg = "Directory '" + parent + "' could not be created";
+                	LoggerUtils.error(logger, msg);
+                	throw new IOException(msg);
+                }
+            }
+        }
+		
+		multFile.transferTo(dest);
 	}
 }
 

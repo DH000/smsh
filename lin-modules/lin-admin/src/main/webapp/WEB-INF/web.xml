@@ -52,15 +52,6 @@
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	
-	<filter>
-		<filter-name>actionContextFilter</filter-name>
-		<filter-class>com.lin.web.filter.ServletActionContextFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>actionContextFilter</filter-name>
-		<url-pattern>*.asp</url-pattern>
-	</filter-mapping>
-
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.htm</welcome-file>
