@@ -13,14 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lin.entity.test.Tester;
 import com.lin.pager.PageInfo;
-import com.lin.service.test.ITesterService;
+import com.lin.service.test.TesterService;
 import com.lin.web.BaseController;
 
 @Controller
 @Scope("prototype")
 public class PagerController extends BaseController {
 	@Resource
-	private ITesterService testerService;
+	private TesterService testerService;
 
 	@RequestMapping(value = "/test/pager.asp")
 	public ModelAndView hello(HttpServletRequest request, HttpServletResponse response){

@@ -18,7 +18,7 @@ import org.hibernate.LockMode;
  * @param <T>
  * @param <PK>
  */
-public interface IBaseService<T, PK extends Serializable> {
+public interface BaseService<T, PK extends Serializable> {
 
 	/**
 	 * 通过id获取记录

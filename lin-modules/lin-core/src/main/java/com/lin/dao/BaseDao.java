@@ -17,7 +17,7 @@ import org.hibernate.LockMode;
 * @param <T>
 * @param <PK>
  */
-public interface IBaseDao<T, PK extends Serializable> {
+public interface BaseDao<T, PK extends Serializable> {
 	/**
 	 * 通过id获取记录
 	 * 

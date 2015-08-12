@@ -1,11 +1,11 @@
 package com.lin.service.test;
 
 import com.lin.entity.test.Tester;
-import com.lin.service.IBaseService;
+import com.lin.service.BaseService;
 
 /**
  */
-public interface ITesterService extends IBaseService<Tester, Integer> {
+public interface TesterService extends BaseService<Tester, Integer> {
 
 	public void forUpdateTest(int id);
 	

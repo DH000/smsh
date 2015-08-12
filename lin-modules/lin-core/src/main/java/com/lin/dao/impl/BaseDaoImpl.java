@@ -12,7 +12,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.lin.dao.HibernateDaoSupport;
-import com.lin.dao.IBaseDao;
+import com.lin.dao.BaseDao;
 import com.lin.utils.Collections3;
 
 /**
@@ -26,7 +26,7 @@ import com.lin.utils.Collections3;
  * @param <PK>
  */
 @Repository("baseDao")
-public class BaseDao<T, PK extends Serializable> extends HibernateDaoSupport implements IBaseDao<T, PK> {
+public class BaseDaoImpl<T, PK extends Serializable> extends HibernateDaoSupport implements BaseDao<T, PK> {
 	/**
 	 * 通过id获取记录
 	 * 

@@ -17,7 +17,7 @@ import com.lin.entity.test.Tester;
 @ContextConfiguration(locations = {"/applicationContext.xml", "/applicationContext-dao.xml", "/applicationContext-service.xml"})
 public class TesterServiceTest {
 	@Resource
-	private ITesterService testerService;
+	private TesterService testerService;
 	
 	@Test
 	public void saveTest(){

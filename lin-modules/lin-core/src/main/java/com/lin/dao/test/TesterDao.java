@@ -1,6 +1,6 @@
 package com.lin.dao.test;
 
-import com.lin.dao.IBaseDao;
+import com.lin.dao.BaseDao;
 import com.lin.entity.test.Tester;
 
 /**
@@ -12,6 +12,6 @@ import com.lin.entity.test.Tester;
  * @date Jun 29, 2015 3:44:14 PM 
  *
  */
-public interface ITesterDao extends IBaseDao<Tester, Integer> {
+public interface TesterDao extends BaseDao<Tester, Integer> {
 
 }

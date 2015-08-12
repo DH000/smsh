@@ -2,8 +2,8 @@ package com.lin.dao.test.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.lin.dao.impl.BaseDao;
-import com.lin.dao.test.ITesterDao;
+import com.lin.dao.impl.BaseDaoImpl;
+import com.lin.dao.test.TesterDao;
 import com.lin.entity.test.Tester;
 
 /**
@@ -16,6 +16,6 @@ import com.lin.entity.test.Tester;
  *
  */
 @Repository
-public class TesterDao extends BaseDao<Tester, Integer>implements ITesterDao {
+public class TesterDaoImpl extends BaseDaoImpl<Tester, Integer>implements TesterDao {
 
 }

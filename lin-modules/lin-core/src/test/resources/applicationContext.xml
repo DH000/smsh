@@ -75,6 +75,9 @@
 				<prop key="hibernate.connection.release_mode">
 					${hibernate.connection.release_mode}
 				</prop>
+				<prop key="hibernate.current_session_context_class">
+					${hibernate.current_session_context_class}
+				</prop>
 			</props>
 		</property>
 		<property name="mappingLocations" value="classpath:/com/lin/entity/**/*.hbm.xml" />
@@ -90,10 +93,6 @@
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<!-- 指定哪些方法需要加入事务，可以使用通配符来只加入需要的方法 -->
-			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="delete*" propagation="REQUIRED" />
 			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="load*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
@@ -104,25 +103,30 @@
 	<!-- 需要引入aop的命名空间 -->
 	<aop:config>
 		<!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 -->
-		<aop:pointcut id="txMethods" expression="execution(* com.lin.service..impl.*.*(..))" />
+		<aop:pointcut id="txMethods" expression="execution(* com.lin..service.impl.*.*(..))" />
 		<!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txMethods" />
 	</aop:config>
 
 	<!-- velocity配置 -->
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="resourceLoaderPath" value="/vm/,/vm/test/" />
+		<!-- 多个路径义逗号分隔 -->
+		<property name="resourceLoaderPath" value="/WEB-INF/vm/" />
 		<property name="configLocation" value="classpath:velocity.properties" />
 	</bean>
-	
+
 	<!-- freemark配置 -->
 	<bean id="freeMarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="templateLoaderPaths">
 			<list>
-				<value>/template/</value>
-				<value>/template/test/</value>
+				<value>/WEB-INF/template/</value>
+				<value>/WEB-INF/template/test/</value>
 			</list>
 		</property>
 	</bean>
+	
+	<!-- spring context -->
+	<bean class="com.lin.utils.SpringContextUtils" />
+
 </beans>

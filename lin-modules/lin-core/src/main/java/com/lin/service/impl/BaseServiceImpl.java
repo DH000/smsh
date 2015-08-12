@@ -9,8 +9,8 @@ import javax.annotation.Resource;
 
 import org.hibernate.LockMode;
 
-import com.lin.dao.IBaseDao;
-import com.lin.service.IBaseService;
+import com.lin.dao.BaseDao;
+import com.lin.service.BaseService;
 import com.lin.utils.Collections3;
 import com.lin.utils.Reflections;
 
@@ -25,10 +25,10 @@ import com.lin.utils.Reflections;
  * @param <T>
  * @param <PK>
  */
-public class BaseService<T, PK extends Serializable> implements IBaseService<T, PK> {
+public class BaseServiceImpl<T, PK extends Serializable> implements BaseService<T, PK> {
 	protected Class<T> entityClass;
 	@Resource
-	private IBaseDao<T, PK> baseDao;
+	private BaseDao<T, PK> baseDao;
 
 	/**
 	 * 实体类类型
